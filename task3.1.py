@@ -1,37 +1,41 @@
 import sys
 from itertools import *
 
+def main():
+    def nearest(lst, target):
+        return min(lst, key=lambda x: abs(x-target))
 
-def nearest(lst, target):
-  return min(lst, key=lambda x: abs(x-target))
+    num = int(input("Задайте количество элементов в списке\n"))
 
-num = int(input())
+    if num < 4:
+        print("end")
+        sys.exit()
 
-if num < 4:
-    print("end")
-    sys.exit()
+    a = eval(input("Задайте список из целых чисел в [] через запятую\n "))
+    b = []
 
-a = eval(input())
-b = []
+    if len(a) != num:
+        print("end")
+        sys.exit()
 
-if len(a) != num:
-    print("end")
-    sys.exit()
+    c = int(input())
 
-c = int(input())
+    summ = []
 
-summ = []
+    for i in combinations(a, 4):
+        summ.append(sum(i))
+        b.append(i)
+        
 
-for i in combinations(a, 4):
-    summ.append(sum(i))
-    b.append(i)
-    #print(b, end=' ')
+    res = nearest(summ, c)
 
-res = nearest(summ, c)
+    for i in range(len(summ)):
+        if res == summ[i]:
+            index = i
+            break
+    print(b[index])
+    print(res)
 
-for i in range(len(summ)):
-    if res == summ[i]:
-        index = i
-        break
-print(b[index])
-print(res)
+
+if __name__ == '__main__':
+    main()
