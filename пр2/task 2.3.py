@@ -15,8 +15,6 @@ def main(s):
     end_index = long_list.index(longest)
     if longest:
         return s[end_index+1-longest:end_index+1]
-    if st == s:
-        return True
     else:
         return False
 st = input("Введите последовательность скобок\n")
