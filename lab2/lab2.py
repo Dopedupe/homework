@@ -32,7 +32,7 @@ def set_attacked(chessboard: list, x: int, y: int, n: int) -> None:  # уста�
             chessboard[x + i][y] = ATTACKED
         if y + i >= 0 and y + i < n:
             chessboard[x][y + i] = ATTACKED
-    print(type(set_attacked([0], 0, 0, 0)))
+    
 
 
 def output(chessboard: list, n: int) -> None:  # вывод расстановки в файл
