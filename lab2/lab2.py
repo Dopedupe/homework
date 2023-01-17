@@ -4,7 +4,7 @@ BUSY = 1
 ATTACKED = 2
 IS_FINDED = 0 #флаг, что хоть одна расстановка найдена (= кол-во расстановок)
 
-def print_board(chessboard, n): #вывод доски в консоль
+def print_board(chessboard: list, n: int) -> None: #вывод доски в консоль
     for x in range(0, n):
         for y in range(0, n):
             if chessboard[x][y] == FREE:
@@ -16,7 +16,7 @@ def print_board(chessboard, n): #вывод доски в консоль
         print()
     print()   
 
-def set_attacked(chessboard, x, y, n):  
+def set_attacked(chessboard: list, x: int, y: int, n: int) -> None:  
     for i in range(-2, 3, 1):           #устанавливаем атаку на диагоналях
         if i == 0:
             continue
@@ -32,15 +32,16 @@ def set_attacked(chessboard, x, y, n):
             chessboard[x][y + i] = ATTACKED
 
 
-def output(chessboard, n, output_file):     #вывод расстановки в файл
+def output(chessboard: list, n: int, output_file ) -> None:     #вывод расстановки в файл
     for x in range(0, n):
         for y in range(0, n):
             if chessboard[x][y] == BUSY:
                 output_file.write("({0},{1}) ".format(x, y))
     output_file.write("\n")
+    
 
 
-def search_solutions(chessboard, n, l, k, x_prev, y_prev, output_file):
+def search_solutions(chessboard: list, n: int, l: int, k: int, x_prev: int, y_prev: int, output_file ) -> None:
     global IS_FINDED
     board = [[0] * MAX_N for i in range(MAX_N)] #доп. доска
     for x in range(x_prev, n):  #начинаем проходить по полям с прошлой итерации (или с начальной 0 0), ищем свободное поле
@@ -63,7 +64,7 @@ def search_solutions(chessboard, n, l, k, x_prev, y_prev, output_file):
 def main():
     output_file = open("output.txt", mode="w"); #для очищения файла вывода
     output_file.close()
-
+    
     global IS_FINDED
     N: int  #размер доски
     L: int  #сколько фигур нужно еще расставить
@@ -87,14 +88,15 @@ def main():
             set_attacked(chessboard, x, y, N)   #отмечаем поля, находящиеся под ударом
 
     with open("output.txt", mode="a") as output_file:   #открываем файл для вывода перед вызовом рекурсивной функции
+        
         if L == 0:
             print_board(chessboard, N) 
         else:
             search_solutions(chessboard, N, L, 0, 0, 0, output_file) #поиск всех возможных расстановок
-
+    
     if IS_FINDED == 0:  #если расстановки не найдены, вывод no solutions
         with open("output.txt", "w") as output_file:
             output_file.write("no solutions")
-
+    
 if __name__ == "__main__":
     main()
